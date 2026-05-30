@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RAG Chatbot</title>
+</head>
+
+<body>
+
+    <h1>RAG Python Assistant</h1>
+
+    <input
+        type="text"
+        id="question"
+        placeholder="Ask a Python question"
+        size="50"
+    >
+
+    <button onclick="askQuestion()">
+        Ask
+    </button>
+
+    <h3>Answer:</h3>
+
+    <p id="answer"></p>
+
+    <script>
+
+        async function askQuestion() {
+
+            const question =
+                document.getElementById("question").value;
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        question: question
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            document.getElementById("answer")
+                .innerText = data.answer;
+        }
+
+    </script>
+
+</body>
+</html>
